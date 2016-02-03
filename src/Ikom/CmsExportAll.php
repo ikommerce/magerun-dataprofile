@@ -31,23 +31,19 @@ class CmsExportAll extends AbstractMagentoCommand{
                 $percorso = $dialog->ask($output, '<question>Percorso:</question>');
             }
             $storeId = $input->getArgument('storeid');
-
-            if ($storeId != null) {
+			/*
+            if ($storeId == null) {
             	$store = array($storeId);
             	$store[] = \Mage_Core_Model_App::ADMIN_STORE_ID;
-            }
+            }*/
 
             $pageModel = \Mage::getModel('cms/page');
             $collection = $pageModel->getCollection()
             				->addFieldToFilter('is_active',1);
             if ($storeId != null) {
             	$collection = $collection
-            		#->addStoreFilter($storeId)
-            		#->addFieldToFilter('store_id', array('in' => $store));
-            		->addFieldToFilter(
-            				['store_id', 'content'],
-            				['in' => $storeId]
-            		);
+            		->addStoreFilter($storeId)
+            		->addFieldToFilter('store_id', array('in' => $store));
             }
            	foreach($collection as $page){
 	            	$page->load();
