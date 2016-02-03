@@ -50,7 +50,7 @@ class CmsExportAll extends AbstractMagentoCommand{
 	            	$_data = $page->getData(); 
 	            	$title = $_data['title'];
 	            	$urlkey =  $_data['identifier'];
-	            	$filename = $percorso.$title;
+	            	$filename = $percorso.$urlkey;
 		            file_put_contents($filename, $data);
 	      			\Mage::log("exported page ${title}", null, $logfile);
       			}
