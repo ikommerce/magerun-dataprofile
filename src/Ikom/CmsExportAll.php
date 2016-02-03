@@ -42,11 +42,11 @@ class CmsExportAll extends AbstractMagentoCommand{
             				->addFieldToFilter('is_active',1);
             if ($storeId != null) {
             	$collection = $collection
-            		->addStoreFilter($storeId)
+            		#->addStoreFilter($storeId)
             		#->addFieldToFilter('store_id', array('in' => $store));
             		->addFieldToFilter(
             				['store_id', 'content'],
-            				['in' => $store]
+            				['in' => $storeId]
             		);
             }
            	foreach($collection as $page){
