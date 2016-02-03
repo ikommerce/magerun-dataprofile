@@ -31,12 +31,12 @@ class CmsExportAll extends AbstractMagentoCommand{
                 $percorso = $dialog->ask($output, '<question>Percorso:</question>');
             }
             $storeId = $input->getArgument('storeid');
-			/*
-            if ($storeId == null) {
+			
+            if ($storeId != null) {
             	$store = array($storeId);
             	$store[] = \Mage_Core_Model_App::ADMIN_STORE_ID;
-            }*/
-
+            }
+			\Mage::log("exported page ${storeId}", null, $logfile);
             $pageModel = \Mage::getModel('cms/page');
             $collection = $pageModel->getCollection()
             				->addFieldToFilter('is_active',1);
