@@ -7,15 +7,15 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CmsList extends AbstractMagentoCommand{
+class CmsExportAll extends AbstractMagentoCommand{
 	
 	protected function configure()
 	{
 		$this
-		->setName('ikom:cms:list')
-		->addArgument('percorso', InputArgument::REQUIRED, 'percorso')
+		->setName('ikom:cms:exportall')
+		->addArgument('percorso', InputArgument::REQUIRED, 'inserisci il percorso della cartella dove si devono salvare le pagine statiche')
 		->addArgument('storeid', InputArgument::OPTIONAL, 'Store Id')
-		->setDescription('export list cms page')
+		->setDescription('export all cms page')
 		;
 	}
 	
@@ -39,15 +39,11 @@ class CmsList extends AbstractMagentoCommand{
 
             $pageModel = \Mage::getModel('cms/page');
             $collection = $pageModel->getCollection();
-            			#->addFieldToFilter('identifier', $urlkey);
             if ($storeId != null) {
             	$collection = $collection
             		->addStoreFilter($storeId)
             		->addFieldToFilter('store_id', array('in' => $store));
             }
-            #$page = $page->getAllIds();
-            #$intro = 'Lista delle pagine statiche:/n';
-            #file_put_contents($filename, $intro);
            	foreach($collection as $page){
 	            	$page->load();
 	            	$data = json_encode($page->getData(), JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
@@ -56,7 +52,7 @@ class CmsList extends AbstractMagentoCommand{
 	            	$urlkey =  $_data['identifier'];
 	            	$filename = $percorso.$title;
 		            file_put_contents($filename, $data);
-	      			\Mage::log("exported page ${urlkey}", null, $logfile);
+	      			\Mage::log("exported page ${title}", null, $logfile);
       			}
       	}
     }

@@ -7,4 +7,4 @@ commands:
     - Ikom\ExportCategories
     - Ikom\CmsExport
     - Ikom\CmsImport
-    - Ikom\CmsList
+    - Ikom\CmsExportAll
