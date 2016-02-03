@@ -37,7 +37,7 @@ class CmsList extends AbstractMagentoCommand{
             	$store[] = \Mage_Core_Model_App::ADMIN_STORE_ID;
             }
 
-            $pageModel = \Mage::getModel('cms/page')->getCollection();;
+            $pageModel = \Mage::getModel('cms/page')->getCollection();
             $collection = $pageModel->getCollection();
             			#->addFieldToFilter('identifier', $urlkey);
             if ($storeId != null) {
@@ -45,7 +45,7 @@ class CmsList extends AbstractMagentoCommand{
             		->addStoreFilter($storeId)
             		->addFieldToFilter('store_id', array('in' => $store));
             }
-            #$page = $page->>getAllIds();
+            #$page = $page->getAllIds();
            	foreach($page as $collection){
 	            if ($page && $page->getPageId()) {
 	            	$page->load();
