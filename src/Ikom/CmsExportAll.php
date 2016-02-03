@@ -15,7 +15,7 @@ class CmsExportAll extends AbstractMagentoCommand{
 		->setName('ikom:cms:exportall')
 		->addArgument('percorso', InputArgument::REQUIRED, 'inserisci il percorso della cartella dove si devono salvare le pagine statiche')
 		->addArgument('storeid', InputArgument::OPTIONAL, 'Store Id')
-		->setDescription('export all cms page')
+		->setDescription('export all cms page enable')
 		;
 	}
 	
@@ -38,7 +38,8 @@ class CmsExportAll extends AbstractMagentoCommand{
             }
 
             $pageModel = \Mage::getModel('cms/page');
-            $collection = $pageModel->getCollection();
+            $collection = $pageModel->getCollection()
+            				->addFieldToFilter('is_active',1);
             if ($storeId != null) {
             	$collection = $collection
             		->addStoreFilter($storeId)
