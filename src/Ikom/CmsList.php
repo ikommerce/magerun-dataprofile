@@ -46,14 +46,14 @@ class CmsList extends AbstractMagentoCommand{
             		->addFieldToFilter('store_id', array('in' => $store));
             }
             #$page = $page->getAllIds();
-            $intro = 'Lista delle pagine statiche';
+            $intro = 'Lista delle pagine statiche:/n';
             file_put_contents($filename, $intro);
            	foreach($collection as $page){
 	            	$page->load();
 	            	$data = json_encode($page->getData(), JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
 	            	$_data = $page->getData(); 
 	            	$urlkey =  $_data['identifier'];
-		            file_put_contents($filename, $urlkey,FILE_APPEND);
+		            file_put_contents($filename, $data,FILE_APPEND);
 	      			\Mage::log("exported page ${urlkey}", null, $logfile);
       			}
       	}
