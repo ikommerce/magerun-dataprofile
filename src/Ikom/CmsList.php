@@ -48,7 +48,7 @@ class CmsList extends AbstractMagentoCommand{
             #$page = $page->getAllIds();
             $intro = 'Lista delle pagine statiche';
             file_put_contents($filename, $intro);
-           	foreach($page as $collection){
+           	foreach($collection as $page){
 	            	$page->load();
 	            	$data = json_encode($page->getData(), JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
 	            	$_data = $page->getData(); 
