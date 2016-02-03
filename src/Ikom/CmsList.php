@@ -38,7 +38,7 @@ class CmsList extends AbstractMagentoCommand{
             }
 
             $pageModel = \Mage::getModel('cms/page');
-            $collection = $pageModel->getCollection();
+            $collection = $pageModel->getCollection()->getAllIds();
             			#->addFieldToFilter('identifier', $urlkey);
             if ($storeId != null) {
             	$collection = $collection
