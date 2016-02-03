@@ -13,7 +13,7 @@ class CmsList extends AbstractMagentoCommand{
 	{
 		$this
 		->setName('ikom:cms:list')
-		->addArgument('file', InputArgument::REQUIRED, 'Filename')
+		->addArgument('percorso', InputArgument::REQUIRED, 'percorso')
 		->addArgument('storeid', InputArgument::OPTIONAL, 'Store Id')
 		->setDescription('export list cms page')
 		;
@@ -26,9 +26,9 @@ class CmsList extends AbstractMagentoCommand{
 		$this->detectMagento($output);
       	if ($this->initMagento()) {
       		$dialog = $this->getHelperSet()->get('dialog');
-      		$filename = $input->getArgument('file');
-            if ($filename == null) {
-                $filename = $dialog->ask($output, '<question>Filename:</question>');
+      		$percorso = $input->getArgument('percorso');
+            if ($percorso == null) {
+                $percorso = $dialog->ask($output, '<question>Percorso:</question>');
             }
             $storeId = $input->getArgument('storeid');
 
@@ -46,14 +46,16 @@ class CmsList extends AbstractMagentoCommand{
             		->addFieldToFilter('store_id', array('in' => $store));
             }
             #$page = $page->getAllIds();
-            $intro = 'Lista delle pagine statiche:/n';
-            file_put_contents($filename, $intro);
+            #$intro = 'Lista delle pagine statiche:/n';
+            #file_put_contents($filename, $intro);
            	foreach($collection as $page){
 	            	$page->load();
 	            	$data = json_encode($page->getData(), JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
 	            	$_data = $page->getData(); 
+	            	$title = $_data['title'];
 	            	$urlkey =  $_data['identifier'];
-		            file_put_contents($filename, $data,FILE_APPEND);
+	            	$filename = $percorso.$title;
+		            file_put_contents($filename, $data);
 	      			\Mage::log("exported page ${urlkey}", null, $logfile);
       			}
       	}
