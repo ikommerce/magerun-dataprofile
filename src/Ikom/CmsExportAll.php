@@ -34,17 +34,18 @@ class CmsExportAll extends AbstractMagentoCommand{
 			
             if ($storeId != null) {
             	$store = array($storeId);
+            }else{
             	$store[] = \Mage_Core_Model_App::ADMIN_STORE_ID;
             }
-			\Mage::log("exported page ${storeId}", null, $logfile);
+			\Mage::log("valore variabile ".var_export($store,1), null, $logfile);
             $pageModel = \Mage::getModel('cms/page');
             $collection = $pageModel->getCollection()
             				->addFieldToFilter('is_active',1);
-            if ($storeId != null) {
-            	$collection = $collection
+           
+           	$collection = $collection
             		->addStoreFilter($storeId)
             		->addFieldToFilter('store_id', array('in' => $store));
-            }
+            
            	foreach($collection as $page){
 	            	$page->load();
 	            	$data = json_encode($page->getData(), JSON_PRETTY_PRINT | JSON_FORCE_OBJECT);
