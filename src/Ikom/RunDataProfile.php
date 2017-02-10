@@ -58,7 +58,8 @@ class RunDataProfile extends AbstractMagentoCommand
       		
       		\Mage::register('current_convert_profile', $profile);
       		$profile->run();
-      		\Mage::log($direction.' profile '.$profileId. ' started.', null, $logfile);
+      		$profileName = $profile->getName();
+      		\Mage::log($direction.' profile with Id '.$profileId. ' and Name ' .$profileName. ' run.', null, $logfile);
       		$batchSingleton = \Mage::getSingleton('dataflow/batch');
 
       		$direction = ucwords($profile->getDirection());
@@ -79,15 +80,16 @@ class RunDataProfile extends AbstractMagentoCommand
 	      					$recordCount++;
 	      					try{
 	      						$batchImportModel->load($importId);
+
 	      						if (!$batchImportModel->getId()) {
 	      							$errors[] = \Mage::helper('dataflow')->__('Skip undefined row');
 	      							continue;
 	      						}
-
+								
 	      						try {
 	      							$importData = $batchImportModel->getBatchData();
 	      							$adapter->saveRow($importData);
-	      						} catch (Exception $e) {
+	      						} catch (\Exception $e) {
 	      							\Mage::log($e->getMessage(), null, $logfile);
 	      							continue;
 	      						}
