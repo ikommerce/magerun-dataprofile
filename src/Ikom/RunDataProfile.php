@@ -55,9 +55,10 @@ class RunDataProfile extends AbstractMagentoCommand
 
       		$direction = ucwords($profile->getDirection());
 
-      		\Mage::log($direction.' profile '.$profileId. ' started.', null, $logfile);
+      		
       		\Mage::register('current_convert_profile', $profile);
       		$profile->run();
+      		\Mage::log($direction.' profile '.$profileId. ' started.', null, $logfile);
       		$batchSingleton = \Mage::getSingleton('dataflow/batch');
 
       		$direction = ucwords($profile->getDirection());
