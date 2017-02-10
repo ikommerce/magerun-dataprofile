@@ -86,7 +86,7 @@ class RunDataProfile extends AbstractMagentoCommand
 	      						try {
 	      							$importData = $batchImportModel->getBatchData();
 	      							$adapter->saveRow($importData);
-	      						} catch (Exception $e) {
+	      						} catch (\Exception $e) {
 	      							\Mage::log($e->getMessage(), null, $logfile);
 	      							continue;
 	      						}
