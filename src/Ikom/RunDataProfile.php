@@ -69,11 +69,13 @@ class RunDataProfile extends AbstractMagentoCommand
 
 	      				$batchImportModel = $batchSingleton->getBatchImportModel();
 	      				$importIds = $batchImportModel->getIdCollection();
+	      				$tot = count($importIds);
 	      				$batchModel = \Mage::getModel('dataflow/batch')->load($batchSingleton->getId());
 	      				$adapter = \Mage::getModel($batchModel->getAdapter());
 	      				$adapter->setBatchParams($batchModel->getParams());
 	      				\Mage::log("Batch profile ". $batchSingleton->getId()
-	      						." has ". count($importIds) ." steps");
+	      						." has ". $tot ." steps");
+	      				
 	      				foreach ($importIds as $importId) {
 	      					$recordCount++;
 	      					try{
@@ -93,7 +95,7 @@ class RunDataProfile extends AbstractMagentoCommand
 
 	      						if ($recordCount % 10 == 0) {
 	      							\Mage::log("Successfully processed ".
-	      									$recordCount." steps", null, $logfile);
+	      									$recordCount." steps of ".$tot, null, $logfile);
 	      						}
 	      					} catch(Exception $ex) {
 	      						\Mage::log('Record #'.$recordCount.' - SKU = '
